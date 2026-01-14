@@ -1,99 +1,43 @@
-<h1>test</h1>
-<div class="container mt-4">
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">My Tickets</h5>
 
-  <h1 class="mb-4">Ticket Management</h1>
+    <!-- כפתור פנייה חדשה -->
+    <a class="btn btn-sm btn-primary" routerLink="/tickets/new" aria-label="Create new ticket">
+      + New Ticket
+    </a>
+  </div>
 
-  <!-- טופס -->
-  <form
-    [formGroup]="ticketForm"
-    (ngSubmit)="submit()"
-    aria-labelledby="openTicketTitle"
-    class="mb-5"
-  >
-    <h2 id="openTicketTitle">Open New Ticket</h2>
+  <div class="card-body p-0">
 
-    <div class="mb-3">
-      <label for="userId" class="form-label">User ID</label>
-      <input
-        id="userId"
-        type="number"
-        class="form-control"
-        formControlName="userId"
-        aria-required="true"
-      />
-    </div>
+    @if (tickets().length === 0) {
+    <p class="text-muted m-3">No tickets found.</p>
+    } @else {
 
-    <div class="mb-3">
-      <label for="subject" class="form-label">Subject</label>
-      <input
-        id="subject"
-        type="text"
-        class="form-control"
-        formControlName="subject"
-        aria-required="true"
-      />
-    </div>
+    <ul class="list-group list-group-flush" role="list">
 
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea
-        id="description"
-        rows="3"
-        class="form-control"
-        formControlName="description"
-        aria-required="true"
-      ></textarea>
-    </div>
+      @for (ticket of tickets(); track ticket.ticketId) {
+      <li class="list-group-item d-flex justify-content-between align-items-start" role="listitem">
+        <div>
+          <strong>{{ ticket.subject }}</strong>
+          <p class="mb-1">{{ ticket.description }}</p>
 
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="ticketForm.invalid"
-    >
-      Submit Ticket
-    </button>
-  </form>
+          <span class="badge" [class.bg-success]="ticket.isClosed" [class.bg-warning]="!ticket.isClosed">
+            {{ ticket.isClosed ? 'Closed' : 'Open' }}
+          </span>
+        </div>
 
-  <!-- רשימת פניות -->
-  <h2>Tickets</h2>
-
-  @if (tickets.length === 0) {
-    <p class="text-muted">No tickets found.</p>
-  } @else {
-
-    <ul class="list-group" role="list">
-
-      @for (ticket of tickets; track ticket.ticketId) {
-        <li
-          class="list-group-item d-flex justify-content-between align-items-start"
-          role="listitem"
-        >
-          <div>
-            <strong>{{ ticket.subject }}</strong>
-            <p class="mb-1">{{ ticket.description }}</p>
-
-            <span
-              class="badge"
-              [class.bg-success]="ticket.isClosed"
-              [class.bg-warning]="!ticket.isClosed"
-            >
-              {{ ticket.isClosed ? 'Closed' : 'Open' }}
-            </span>
-          </div>
-
-          @if (!ticket.isClosed) {
-            <button
-              class="btn btn-sm btn-outline-secondary"
-              (click)="closeTicket(ticket.ticketId)"
-              aria-label="Close ticket"
-            >
-              Close
-            </button>
-          }
-        </li>
+        @if (!ticket.isClosed) {
+        <button class="btn btn-sm btn-outline-secondary" (click)="closeTicket(ticket.ticketId)"
+          aria-label="Close ticket">
+          Close
+        </button>
+        }
+      </li>
       }
 
     </ul>
-  }
+    }
 
+  </div>
 </div>

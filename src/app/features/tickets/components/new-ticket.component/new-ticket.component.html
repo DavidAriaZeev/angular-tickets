@@ -1,0 +1,108 @@
+<div class="d-flex justify-content-center">
+
+  <div class="card ticket-card">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">New Ticket</h5>
+
+      <button type="button" class="btn btn-link p-0" (click)="goBack()" aria-label="Back to tickets">
+        ← Back
+      </button>
+    </div>
+
+    <div class="card-body">
+
+      @if (!success()) {
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <!-- User ID -->
+        <div class="mb-3">
+          <label for="userId" class="form-label">User ID</label>
+          <input id="userId" type="number" class="form-control" formControlName="userId" max="999999999" min="0"
+            [class.is-invalid]="showError('userId')"
+            [attr.aria-describedby]="showError('userId') ? 'userIdError' : null" />
+
+          @if (showError('userId')) {
+          <div id="userIdError" class="invalid-feedback">
+            @if (form.controls.userId.errors?.['required']) {
+            User ID is required
+            } @else if (form.controls.userId.errors?.['max']) {
+            User ID must contain up to 9 digits
+            } @else if (form.controls.userId.errors?.['idInvalid']) {
+            Invalid Israeli ID number (check digit is incorrect)
+            }
+          </div>
+          }
+
+
+        </div>
+
+        <!-- Subject -->
+        <div class="mb-3">
+          <label for="subject" class="form-label">Subject</label>
+          <input id="subject" type="text" class="form-control" formControlName="subject" maxlength="100"
+            [class.is-invalid]="showError('subject')"
+            [attr.aria-describedby]="showError('subject') ? 'subjectError' : null" />
+
+          @if (showError('subject')) {
+          <div id="subjectError" class="invalid-feedback">
+            @if (form.controls.subject.errors?.['required']) {
+            Subject is required
+            } @else if (form.controls.subject.errors?.['maxlength']) {
+            Subject can contain up to 100 characters
+            }
+          </div>
+          }
+
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" rows="3" class="form-control" formControlName="description" maxlength="300"
+            [class.is-invalid]="showError('description')"
+            [attr.aria-describedby]="showError('description') ? 'descriptionError' : null"></textarea>
+
+          @if (showError('description')) {
+          <div id="descriptionError" class="invalid-feedback">
+            @if (form.controls.description.errors?.['required']) {
+            Description is required
+            } @else if (form.controls.description.errors?.['maxlength']) {
+            Description can contain up to 300 characters
+            }
+          </div>
+          }
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <button type="button" class="btn btn-link" (click)="resetForm()">
+            Clear
+          </button>
+
+          <button type="submit" class="btn btn-primary">
+            Submit
+          </button>
+        </div>
+
+      </form>
+
+      } @else {
+
+      <div class="alert alert-success mb-0">
+        <h5>Ticket submitted successfully</h5>
+        <p class="mb-3">
+          You will be redirected shortly.
+        </p>
+
+        <button class="btn btn-outline-primary" (click)="goBack()">
+          Continue
+        </button>
+      </div>
+
+      }
+
+    </div>
+  </div>
+
+</div>
