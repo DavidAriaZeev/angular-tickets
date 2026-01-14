@@ -1,0 +1,99 @@
+<h1>test</h1>
+<div class="container mt-4">
+
+  <h1 class="mb-4">Ticket Management</h1>
+
+  <!-- טופס -->
+  <form
+    [formGroup]="ticketForm"
+    (ngSubmit)="submit()"
+    aria-labelledby="openTicketTitle"
+    class="mb-5"
+  >
+    <h2 id="openTicketTitle">Open New Ticket</h2>
+
+    <div class="mb-3">
+      <label for="userId" class="form-label">User ID</label>
+      <input
+        id="userId"
+        type="number"
+        class="form-control"
+        formControlName="userId"
+        aria-required="true"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="subject" class="form-label">Subject</label>
+      <input
+        id="subject"
+        type="text"
+        class="form-control"
+        formControlName="subject"
+        aria-required="true"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        rows="3"
+        class="form-control"
+        formControlName="description"
+        aria-required="true"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="ticketForm.invalid"
+    >
+      Submit Ticket
+    </button>
+  </form>
+
+  <!-- רשימת פניות -->
+  <h2>Tickets</h2>
+
+  @if (tickets.length === 0) {
+    <p class="text-muted">No tickets found.</p>
+  } @else {
+
+    <ul class="list-group" role="list">
+
+      @for (ticket of tickets; track ticket.ticketId) {
+        <li
+          class="list-group-item d-flex justify-content-between align-items-start"
+          role="listitem"
+        >
+          <div>
+            <strong>{{ ticket.subject }}</strong>
+            <p class="mb-1">{{ ticket.description }}</p>
+
+            <span
+              class="badge"
+              [class.bg-success]="ticket.isClosed"
+              [class.bg-warning]="!ticket.isClosed"
+            >
+              {{ ticket.isClosed ? 'Closed' : 'Open' }}
+            </span>
+          </div>
+
+          @if (!ticket.isClosed) {
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              (click)="closeTicket(ticket.ticketId)"
+              aria-label="Close ticket"
+            >
+              Close
+            </button>
+          }
+        </li>
+      }
+
+    </ul>
+  }
+
+</div>
