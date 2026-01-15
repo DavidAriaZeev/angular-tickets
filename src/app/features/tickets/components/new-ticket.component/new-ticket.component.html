@@ -89,14 +89,15 @@
 
       } @else {
 
-      <div class="alert alert-success mb-0">
+      <div class="alert alert-success mb-0 text-center">
         <h5>Ticket submitted successfully</h5>
-        <p class="mb-3">
-          You will be redirected shortly.
+
+        <p class="mb-2">
+          Redirecting in <strong>{{ countdown() }}</strong>…
         </p>
 
         <button class="btn btn-outline-primary" (click)="goBack()">
-          Continue
+          Continue now
         </button>
       </div>
 
@@ -106,3 +107,7 @@
   </div>
 
 </div>
+
+@if (error()) {
+<app-error-modal [title]="error()!.title" [message]="error()!.message" (clickClose)="error.set(null)" />
+}

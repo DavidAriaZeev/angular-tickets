@@ -1,34 +1,48 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { NewTicketRequest, Ticket } from '../features/tickets/models/ticket.model';
 import { AppConfigService } from '../core/config/app-config.service';
+import { SpinnerService } from '../core/spinner/spinner.service';
 
 /**
- * שירות לניהול פניות (Tickets)
- * אחראי על תקשורת עם ה-API
+ * TicketService
+ * Responsible for communicating with the Tickets API
  */
 @Injectable({
   providedIn: 'root'
 })
 export class TicketService {
-
   private readonly http = inject(HttpClient);
+  private readonly spinner = inject(SpinnerService);
   private readonly configService = inject(AppConfigService);
-  private readonly apiUrl: string = `${this.configService.configuration.apiBaseUrl}/tickets`;
+  private readonly apiUrl = `${this.configService.configuration.apiBaseUrl}`;
 
-  /** שליפת כל הפניות */
+  /** Get all tickets */
   public getTickets(): Observable<Ticket[]> {
-    return this.http.get<Ticket[]>(this.apiUrl);
+    this.spinner.show();
+
+    return this.http.get<Ticket[]>(`${this.apiUrl}/tickets`).pipe(
+      finalize(() => this.spinner.hide())
+    );
   }
 
-  /** יצירת פנייה חדשה */
-  public addTicket(ticket: NewTicketRequest): Observable<Ticket> {
-    return this.http.post<Ticket>(this.apiUrl, ticket);
+  /** Create a new ticket */
+  public addTicket(
+    ticket: NewTicketRequest): Observable<Ticket> {
+    this.spinner.show();
+
+    return this.http.post<Ticket>(`${this.apiUrl}/createTicket`, ticket).pipe(
+      finalize(() => this.spinner.hide())
+    );
   }
 
-  /** סגירת פנייה לפי מזהה */
+  /** Close an existing ticket */
   public closeTicket(id: number): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}/close`, {});
+    this.spinner.show();
+
+    return this.http.put<void>(`${this.apiUrl}/updateTicket/${id}`, {}).pipe(
+      finalize(() => this.spinner.hide())
+    );
   }
 }

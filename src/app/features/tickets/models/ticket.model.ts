@@ -14,3 +14,9 @@ export interface NewTicketRequest {
   subject: string;
   description: string;
 }
+
+export enum FilterStatus {
+  All = 1,
+  Open = 2,
+  Closed = 3,
+}
