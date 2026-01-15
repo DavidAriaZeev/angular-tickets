@@ -1,10 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  inject,
-  signal,
-  OnDestroy
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -35,41 +29,19 @@ export class NewTicketComponent implements OnDestroy {
   /** האם ניסו לשלוח */
   public readonly submitted = signal(false);
 
-  /** Countdown לניווט אוטומטי */
+  /**  ניווט אוטומטי בשניות לאחר יצירה */
   public readonly countdown = signal(5);
 
   /** שגיאה להצגת modal */
-  public readonly error = signal<{
-    title: string;
-    message: string;
-  } | null>(null);
+  public readonly error = signal<{ title: string; message: string; } | null>(null);
 
   /** מזהה הטיימר */
   private countdownTimer?: number;
 
   protected readonly form = this.fb.nonNullable.group({
-    userId: [
-      null,
-      [
-        Validators.required,
-        Validators.max(999999999),
-        IDValidator
-      ]
-    ],
-    subject: [
-      '',
-      [
-        Validators.required,
-        Validators.maxLength(100)
-      ]
-    ],
-    description: [
-      '',
-      [
-        Validators.required,
-        Validators.maxLength(300)
-      ]
-    ]
+    userId: [null, [Validators.required, Validators.max(999999999), IDValidator]],
+    subject: ['', [Validators.required, Validators.maxLength(100)]],
+    description: ['', [Validators.required, Validators.maxLength(300)]]
   });
 
   /** שליחת פנייה */
@@ -148,7 +120,7 @@ export class NewTicketComponent implements OnDestroy {
     );
   }
 
-  /** ניקוי משאבים בעת השמדת הקומפוננטה */
+  /** מחיקת האינטרבל למקרה ופתוח*/
   ngOnDestroy(): void {
     this.clearCountdown();
   }

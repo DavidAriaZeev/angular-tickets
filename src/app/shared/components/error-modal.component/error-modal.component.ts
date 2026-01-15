@@ -1,13 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  input,
-  output,
-  AfterViewInit,
-  OnDestroy,
-  ElementRef,
-  inject,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output, AfterViewInit, OnDestroy, ElementRef, inject, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 declare const bootstrap: any;

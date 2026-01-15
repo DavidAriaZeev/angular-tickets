@@ -1,59 +1,76 @@
-# Tickets
+# 🎟️ Tickets Client – Angular Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.5.
+שם פרטי: דוד אריה
+משפחה: זאב
+ת"ז: 315511766
 
-## Development server
 
-To start a local development server, run:
+.שנבנתה כחלק מתרגיל טכני לראיון עבודה ,ASP.NET Core מבוססת ,(Tickets) לניהול פניות Frontend אפליקציית 
+
+האפליקציה מאפשרת:
+- צפייה ברשימת פניות
+- סינון פניות לפי סטטוס (All / Open / Closed)
+- יצירת פנייה חדשה
+- סגירת פנייה קיימת
+- גנרי Modal טיפול בשגיאות באמצעות
+- API גלובלי בזמן תקשורת עם ה־ Spinner הצגת 
+
+---
+
+## 🧰 טכנולוגיות ושיטות עבודה
+
+- Angular 21  
+- Standalone Components 
+- Signals  
+- OnPush Change Detection  
+- Reactive Forms  
+- Bootstrap 5  
+- Custom Spinner Service  
+- Validators  
+- TypeScript  
+
+---
+
+## 🧱 מבנה הפרויקט
+
+ראו את מבנה התיקיות תחת `src/app`, הכולל:
+- core (config, spinner, utils)
+- features/tickets (components, models, services)
+- shared (validators, error modal)
+
+---
+
+## ⚙️ קונפיגורציית API
+
+ה-API מוגדר דרך:
+`src/assets/config/app-config.json`
+
+```json
+{
+  "apiBaseUrl": "https://localhost:7218"
+}
+```
+
+---
+
+## ▶️ הרצה מקומית
 
 ```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+האפליקציה תעלה בכתובת:
+http://localhost:4200
 
-## Code scaffolding
+.רץ במקביל API -יש לוודא שה
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 📝 הערות
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- הפרויקט נכתב כתרגיל טכני לראיון
+- אינו כולל Authentication
+- מותאם להרחבה ולתחזוקה
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+GPT השתמשתי ב 
